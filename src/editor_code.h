@@ -52,6 +52,8 @@ static constexpr const char* const EDITOR_CODE_MODULES[] = {
 	"Sfx", "Music",
 	"Font",
 	"Physics",
+	// Invoke.
+	"Invoke",
 	// Application.
 	"Application",
 	"Canvas",

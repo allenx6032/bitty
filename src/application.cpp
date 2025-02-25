@@ -536,7 +536,8 @@ public:
 
 			ImGuiSDL::Render(ImGui::GetDrawData());
 		}
-		_effects->finish(_window, _renderer, _workspace);
+		if (!_workspace->skipping())
+			_effects->finish(_window, _renderer, _workspace);
 		_window->update();
 
 		const long long end = DateTime::ticks();

@@ -412,6 +412,8 @@ bool ScriptingLua::cycle(double delta) {
 	if (check(_L, ret) != LUA_OK || _code != LUA_OK)
 		return false;
 
+	Lua::Invoke::callback(_L);
+
 	// For native developers who write gameplay code in mixed Lua/C++ or pure C++,
 	// put your C++ entry here. You can also implement your own `Scripting` or
 	// `Executable` instead of this `ScriptingLua`.

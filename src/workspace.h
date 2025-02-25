@@ -259,6 +259,7 @@ protected:
 	BITTY_PROPERTY_READONLY(bool, busy)
 
 	BITTY_PROPERTY_READONLY(unsigned, activeFrameRate)
+	BITTY_PROPERTY_READONLY(int, skipFrameCount)
 
 	BITTY_PROPERTY_READONLY(Executable::States, currentState)
 
@@ -374,6 +375,8 @@ public:
 	 */
 	virtual class Theme* theme(void) const = 0;
 
+	virtual bool skipping(void);
+	virtual void skipFrame(void);
 	/**
 	 * @brief Gets whether prefers 2x scale for big display.
 	 */

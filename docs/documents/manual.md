@@ -263,22 +263,22 @@ This module generates 2D or 3D noise values.
 
 Available options:
 
-| Key | Value | Note |
-|---|---|---|
-| "frequency" | Real number | Defaults to 0.01 |
-| "noise_type" | Can be one in "open_simplex2", "open_simplex2s", "cellular", "perlin", "value_cubic", "value" | Defaults to "open_simplex2" |
-| "rotation_type_3d" | Can be one in "none", "improve_xy_planes", "improve_xz_planes" | Defaults to "none" |
-| "fractal_type" | Can be one in "none", "fbm", "ridged", "pingpong", "domain_warp_progressive", "domain_warp_independent" | Defaults to "none" |
-| "fractal_octaves" | Integer | Defaults to 3 |
-| "fractal_lacunarity" | Real number | Defaults to 2.0 |
-| "fractal_gain" | Real number | Defaults to 0.5 |
-| "fractal_weighted_strength" | Real number | Defaults to 0.0 |
-| "fractal_pingpong_strength" | Real number | Defaults to 2.0 |
-| "cellular_distance_function" | Can be one in "euclidean", "euclidean_sq", "manhattan", "hybrid" | Defaults to "euclidean_sq" |
-| "cellular_return_type" | Can be one in "cell_value", "distance", "distance2", "distance2_add", "distance2_sub", "distance2_mul", "distance2_div" | Defaults to "distance" |
-| "cellular_jitter" | Real number | Defaults to 1.0 |
-| "domain_warp_type" | Can be one in "open_simplex2", "open_simplex2_reduced", "basic_grid" | Defaults to "open_simplex2" |
-| "domain_warp_amplitude" | Real number | Defaults to 1.0 |
+| Key                          | Value                                                                                                                   | Note                        |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| "frequency"                  | Real number                                                                                                             | Defaults to 0.01            |
+| "noise_type"                 | Can be one in "open_simplex2", "open_simplex2s", "cellular", "perlin", "value_cubic", "value"                           | Defaults to "open_simplex2" |
+| "rotation_type_3d"           | Can be one in "none", "improve_xy_planes", "improve_xz_planes"                                                          | Defaults to "none"          |
+| "fractal_type"               | Can be one in "none", "fbm", "ridged", "pingpong", "domain_warp_progressive", "domain_warp_independent"                 | Defaults to "none"          |
+| "fractal_octaves"            | Integer                                                                                                                 | Defaults to 3               |
+| "fractal_lacunarity"         | Real number                                                                                                             | Defaults to 2.0             |
+| "fractal_gain"               | Real number                                                                                                             | Defaults to 0.5             |
+| "fractal_weighted_strength"  | Real number                                                                                                             | Defaults to 0.0             |
+| "fractal_pingpong_strength"  | Real number                                                                                                             | Defaults to 2.0             |
+| "cellular_distance_function" | Can be one in "euclidean", "euclidean_sq", "manhattan", "hybrid"                                                        | Defaults to "euclidean_sq"  |
+| "cellular_return_type"       | Can be one in "cell_value", "distance", "distance2", "distance2_add", "distance2_sub", "distance2_mul", "distance2_div" | Defaults to "distance"      |
+| "cellular_jitter"            | Real number                                                                                                             | Defaults to 1.0             |
+| "domain_warp_type"           | Can be one in "open_simplex2", "open_simplex2_reduced", "basic_grid"                                                    | Defaults to "open_simplex2" |
+| "domain_warp_amplitude"      | Real number                                                                                                             | Defaults to 1.0             |
 
 * `noiser:seed(seed)`: seeds the `Noiser` for all noise types
 	* `seed`: the seed integer
@@ -1150,8 +1150,8 @@ The callback of disconnected is an invokable in form of `function (addr) end`, w
 
 Currently there is only one available option:
 
-| Key | Value | Note |
-|---|---|---|
+| Key         | Value                                                                 | Note                                |
+|-------------|-----------------------------------------------------------------------|-------------------------------------|
 | "data_type" | Can be one in "stream", "bytes", "string", "json", defaults to "json" | Data type for transmission/datagram |
 
 * `network:open(addr[, protocal])`: opens a `Network` as either server or client
@@ -1163,23 +1163,23 @@ Currently there is only one available option:
 
 An `addr` argument is combined with four parts, direction, protocol, address and port:
 
-| Part | Value |
-|---|---|
+| Part      | Value                                 |
+|-----------|---------------------------------------|
 | Direction | `>` for connecting, `<` for listening |
-| Protocol | `udp://`, `tcp://` |
-| Address | IP address |
-| Port | Port number |
+| Protocol  | `udp://`, `tcp://`                    |
+| Address   | IP address                            |
+| Port      | Port number                           |
 
 For example:
 
-| Address string | Connectivity |
-|---|---|
-| ">tcp://192.168.0.1:12000" | As client, connects to 192.168.0.1 port 12000 via TCP |
-| "<udp://127.0.0.1:12000" | As server, listens from local host port 12000 via UDP |
-| "udp://192.168.0.1:12000" | As client, sends to 192.168.0.1 port 12000 via UDP |
-| "tcp://12000" | As server, listens from port 12000 via TCP |
-| "192.168.0.1:12000" | As client, connects to 192.168.0.1 port 12000, protocal determined by the explicit `protocal` parameter |
-| "12000" | As server, listens from port 12000, protocal determined by the explicit `protocal` parameter |
+| Address string             | Connectivity                                                                                            |
+|----------------------------|---------------------------------------------------------------------------------------------------------|
+| ">tcp://192.168.0.1:12000" | As client, connects to 192.168.0.1 port 12000 via TCP                                                   |
+| "<udp://127.0.0.1:12000"   | As server, listens from local host port 12000 via UDP                                                   |
+| "udp://192.168.0.1:12000"  | As client, sends to 192.168.0.1 port 12000 via UDP                                                      |
+| "tcp://12000"              | As server, listens from port 12000 via TCP                                                              |
+| "192.168.0.1:12000"        | As client, connects to 192.168.0.1 port 12000, protocal determined by the explicit `protocal` parameter |
+| "12000"                    | As server, listens from port 12000, protocal determined by the explicit `protocal` parameter            |
 
 * `network:poll([timeoutMs])`: polls pending `Network` events manually; do not need to call this function if a program already entered the `update(delta)` loop
 	* `timeoutMs`: the timeout value
@@ -1329,13 +1329,13 @@ fetch('https://github.com', {
   end)
 ```
 
-| Option | Values | Description |
-|---|---|---|
-| `method` | "GET", "POST", "PUT", "DELETE", etc. | Specific method to perform HTTP request |
-| `headers` | Valid HTTP headers | Optional. Header data |
-| `body` | Request body | Optional. Body data |
-| `hint` | "bytes", "string", "json" | Optional, defaults to "string". Prefers how to interpret respond data |
-| `allow_insecure_connection_for_https` | `true`, `false` | Optional, defaults to `false`, for desktop only. Specifies whether to allow insecure connection for HTTPS |
+| Option                                | Values                               | Description                                                                                               |
+|---------------------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `method`                              | "GET", "POST", "PUT", "DELETE", etc. | Specific method to perform HTTP request                                                                   |
+| `headers`                             | Valid HTTP headers                   | Optional. Header data                                                                                     |
+| `body`                                | Request body                         | Optional. Body data                                                                                       |
+| `hint`                                | "bytes", "string", "json"            | Optional, defaults to "string". Prefers how to interpret respond data                                     |
+| `allow_insecure_connection_for_https` | `true`, `false`                      | Optional, defaults to `false`, for desktop only. Specifies whether to allow insecure connection for HTTPS |
 
 [TOP](#reference-manual)
 
@@ -1826,15 +1826,15 @@ Due to space limitation in the page, read [Physics](physics) for details.
 
 Available options:
 
-| Key | Value | Note |
-|---|---|---|
-| "title" | String, `title` | Sets the title of the application window |
-| "minimum_size" | Integers, `width`, `height` | Sets the minimum size of the application window |
-| "maximum_size" | Integers, `width`, `height` | Sets the maximum size of the application window |
-| "bordered" | Boolean, `bordered` | Sets whether the application window is bordered |
-| "resizable" | Boolean, `resizable` | Sets whether the application window is resizable |
-| "position" | Integers, `x`, `y` | Sets the position of the application window |
-| "display_index" | Integers, `index` | Sets the index where the application window will be displayed on that device |
+| Key             | Value                       | Note                                                                         |
+|-----------------|-----------------------------|------------------------------------------------------------------------------|
+| "title"         | String, `title`             | Sets the title of the application window                                     |
+| "minimum_size"  | Integers, `width`, `height` | Sets the minimum size of the application window                              |
+| "maximum_size"  | Integers, `width`, `height` | Sets the maximum size of the application window                              |
+| "bordered"      | Boolean, `bordered`         | Sets whether the application window is bordered                              |
+| "resizable"     | Boolean, `resizable`        | Sets whether the application window is resizable                             |
+| "position"      | Integers, `x`, `y`          | Sets the position of the application window                                  |
+| "display_index" | Integers, `index`           | Sets the index where the application window will be displayed on that device |
 
 * `Application.setCursor(img[, x, y])`: sets the mouse cursor
 	* `img`: the specific `Image` to set, `nil` to reset
@@ -1920,11 +1920,11 @@ Project accepts strategies, add a "strategies" field in "info.json" to enable sp
 
 Currently there is only one available strategy, change and try if it's needed:
 
-| Strategy | Description | Note |
-|---|---|---|
-| "batch_map" | Hints to batch map for better rendering performance, but occupies more memory | Always on for HTML build |
-| "linear_canvas" | Hints to set canvas filtering as linear | |
-| "anisotropic_canvas" | Hints to set canvas filtering as anisotropic | |
+| Strategy             | Description                                                                   | Note                     |
+|----------------------|-------------------------------------------------------------------------------|--------------------------|
+| "batch_map"          | Hints to batch map for better rendering performance, but occupies more memory | Always on for HTML build |
+| "linear_canvas"      | Hints to set canvas filtering as linear                                       |                          |
+| "anisotropic_canvas" | Hints to set canvas filtering as anisotropic                                  |                          |
 
 **Constants**
 

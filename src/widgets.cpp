@@ -1599,6 +1599,8 @@ bool Url(const char* label, const char* link, bool adj) {
 		if (adj)
 			AlignTextToFramePadding();
 		TextColored(ImColor(41, 148, 255, 255), ul.c_str());
+
+		SetMouseCursor(ImGuiMouseCursor_Hand);
 	}
 	if (IsItemHovered() && IsMouseReleased(ImGuiMouseButton_Left)) { // Used `IsItemHovered()` instead of `IsItemClicked()` to avoid a clicking issue.
 		if (link) {

@@ -605,16 +605,16 @@ private:
 		VariableGuard<decltype(style.ItemSpacing)> guardItemSpacing(&style.ItemSpacing, style.ItemSpacing, ImVec2(8, 4));
 
 		if (ImGui::BeginPopup("@Ed/Ctx")) {
-			if (ImGui::MenuItem(ws->theme()->menuEdit_Cut())) {
+			if (ImGui::MenuItem(ws->theme()->menuEdit_Cut(), nullptr, nullptr, HasSelection())) {
 				cut();
 			}
-			if (ImGui::MenuItem(ws->theme()->menuEdit_Copy())) {
+			if (ImGui::MenuItem(ws->theme()->menuEdit_Copy(), nullptr, nullptr, HasSelection())) {
 				copy();
 			}
 			if (ImGui::MenuItem(ws->theme()->menuEdit_Paste(), nullptr, nullptr, pastable())) {
 				paste();
 			}
-			if (ImGui::MenuItem(ws->theme()->menuEdit_Delete())) {
+			if (ImGui::MenuItem(ws->theme()->menuEdit_Delete(), nullptr, nullptr, HasSelection())) {
 				del();
 			}
 			ImGui::Separator();

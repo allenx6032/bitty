@@ -309,7 +309,7 @@ public:
 		_ticks += delta;
 		const Frame &f = _frames[_cursor];
 		if (_ticks >= f.interval) {
-			_ticks -= f.interval;
+			_ticks = 0; // _ticks -= f.interval;
 			++_cursor;
 			if (_loop) {
 				if (_cursor > _playingEnd)

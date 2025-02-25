@@ -376,6 +376,7 @@ void WorkspaceSketchbook::require(Executable* exec) {
 		if (exec->primitives()) {
 			Lua::Engine::open(exec);
 		}
+		Lua::Invoke::open(exec);
 		Lua::Application::open(exec);
 
 		// Promise.

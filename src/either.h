@@ -126,7 +126,7 @@ template<class T> struct Left {
 
 	Left(const T &val) : value(val) {
 	}
-	Left(const Left<T> &other) : value(other.val) {
+	Left(const Left<T> &other) : value(other.value) {
 	}
 
 	Left<T> &operator = (const T &val) {
@@ -146,7 +146,7 @@ template<class T> struct Right {
 
 	Right(const T &val) : value(val) {
 	}
-	Right(const Right<T> &other) : value(other.val) {
+	Right(const Right<T> &other) : value(other.value) {
 	}
 
 	Right<T> &operator = (const T &val) {

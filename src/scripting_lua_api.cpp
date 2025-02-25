@@ -9740,6 +9740,857 @@ void open(class Executable* exec) {
 
 /*
 ** {===========================================================================
+** Invoke
+*/
+
+#if defined BITTY_OS_HTML
+EM_JS(
+	void, scriptingLuaApiFree, (void* ptr), {
+		_free(ptr);
+	}
+);
+
+struct InvokeCall {
+	typedef std::deque<InvokeCall> Queue;
+
+	Text::Array arguments;
+
+	InvokeCall() {
+	}
+};
+
+static InvokeCall::Queue invokeCalls;
+
+extern "C" {
+
+EMSCRIPTEN_KEEPALIVE int call0(void) {
+	InvokeCall call;
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call1(const char* arg1) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	scriptingLuaApiFree((void*)arg1);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call2(const char* arg1, const char* arg2) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call3(const char* arg1, const char* arg2, const char* arg3) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call4(const char* arg1, const char* arg2, const char* arg3, const char* arg4) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call5(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call6(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call7(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call8(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call9(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call10(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call11(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10, const char* arg11) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	const std::string arg11_ = arg11 ? arg11 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	scriptingLuaApiFree((void*)arg11);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	call.arguments.push_back(arg11_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call12(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10, const char* arg11, const char* arg12) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	const std::string arg11_ = arg11 ? arg11 : "";
+	const std::string arg12_ = arg12 ? arg12 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	scriptingLuaApiFree((void*)arg11);
+	scriptingLuaApiFree((void*)arg12);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	call.arguments.push_back(arg11_);
+	call.arguments.push_back(arg12_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call13(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10, const char* arg11, const char* arg12, const char* arg13) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	const std::string arg11_ = arg11 ? arg11 : "";
+	const std::string arg12_ = arg12 ? arg12 : "";
+	const std::string arg13_ = arg13 ? arg13 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	scriptingLuaApiFree((void*)arg11);
+	scriptingLuaApiFree((void*)arg12);
+	scriptingLuaApiFree((void*)arg13);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	call.arguments.push_back(arg11_);
+	call.arguments.push_back(arg12_);
+	call.arguments.push_back(arg13_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call14(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10, const char* arg11, const char* arg12, const char* arg13, const char* arg14) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	const std::string arg11_ = arg11 ? arg11 : "";
+	const std::string arg12_ = arg12 ? arg12 : "";
+	const std::string arg13_ = arg13 ? arg13 : "";
+	const std::string arg14_ = arg14 ? arg14 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	scriptingLuaApiFree((void*)arg11);
+	scriptingLuaApiFree((void*)arg12);
+	scriptingLuaApiFree((void*)arg13);
+	scriptingLuaApiFree((void*)arg14);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	call.arguments.push_back(arg11_);
+	call.arguments.push_back(arg12_);
+	call.arguments.push_back(arg13_);
+	call.arguments.push_back(arg14_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call15(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10, const char* arg11, const char* arg12, const char* arg13, const char* arg14, const char* arg15) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	const std::string arg11_ = arg11 ? arg11 : "";
+	const std::string arg12_ = arg12 ? arg12 : "";
+	const std::string arg13_ = arg13 ? arg13 : "";
+	const std::string arg14_ = arg14 ? arg14 : "";
+	const std::string arg15_ = arg15 ? arg15 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	scriptingLuaApiFree((void*)arg11);
+	scriptingLuaApiFree((void*)arg12);
+	scriptingLuaApiFree((void*)arg13);
+	scriptingLuaApiFree((void*)arg14);
+	scriptingLuaApiFree((void*)arg15);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	call.arguments.push_back(arg11_);
+	call.arguments.push_back(arg12_);
+	call.arguments.push_back(arg13_);
+	call.arguments.push_back(arg14_);
+	call.arguments.push_back(arg15_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+EMSCRIPTEN_KEEPALIVE int call16(const char* arg1, const char* arg2, const char* arg3, const char* arg4, const char* arg5, const char* arg6, const char* arg7, const char* arg8, const char* arg9, const char* arg10, const char* arg11, const char* arg12, const char* arg13, const char* arg14, const char* arg15, const char* arg16) {
+	const std::string arg1_ = arg1 ? arg1 : "";
+	const std::string arg2_ = arg2 ? arg2 : "";
+	const std::string arg3_ = arg3 ? arg3 : "";
+	const std::string arg4_ = arg4 ? arg4 : "";
+	const std::string arg5_ = arg5 ? arg5 : "";
+	const std::string arg6_ = arg6 ? arg6 : "";
+	const std::string arg7_ = arg7 ? arg7 : "";
+	const std::string arg8_ = arg8 ? arg8 : "";
+	const std::string arg9_ = arg9 ? arg9 : "";
+	const std::string arg10_ = arg10 ? arg10 : "";
+	const std::string arg11_ = arg11 ? arg11 : "";
+	const std::string arg12_ = arg12 ? arg12 : "";
+	const std::string arg13_ = arg13 ? arg13 : "";
+	const std::string arg14_ = arg14 ? arg14 : "";
+	const std::string arg15_ = arg15 ? arg15 : "";
+	const std::string arg16_ = arg16 ? arg16 : "";
+	scriptingLuaApiFree((void*)arg1);
+	scriptingLuaApiFree((void*)arg2);
+	scriptingLuaApiFree((void*)arg3);
+	scriptingLuaApiFree((void*)arg4);
+	scriptingLuaApiFree((void*)arg5);
+	scriptingLuaApiFree((void*)arg6);
+	scriptingLuaApiFree((void*)arg7);
+	scriptingLuaApiFree((void*)arg8);
+	scriptingLuaApiFree((void*)arg9);
+	scriptingLuaApiFree((void*)arg10);
+	scriptingLuaApiFree((void*)arg11);
+	scriptingLuaApiFree((void*)arg12);
+	scriptingLuaApiFree((void*)arg13);
+	scriptingLuaApiFree((void*)arg14);
+	scriptingLuaApiFree((void*)arg15);
+	scriptingLuaApiFree((void*)arg16);
+	InvokeCall call;
+	call.arguments.push_back(arg1_);
+	call.arguments.push_back(arg2_);
+	call.arguments.push_back(arg3_);
+	call.arguments.push_back(arg4_);
+	call.arguments.push_back(arg5_);
+	call.arguments.push_back(arg6_);
+	call.arguments.push_back(arg7_);
+	call.arguments.push_back(arg8_);
+	call.arguments.push_back(arg9_);
+	call.arguments.push_back(arg10_);
+	call.arguments.push_back(arg11_);
+	call.arguments.push_back(arg12_);
+	call.arguments.push_back(arg13_);
+	call.arguments.push_back(arg14_);
+	call.arguments.push_back(arg15_);
+	call.arguments.push_back(arg16_);
+	invokeCalls.push_back(call);
+
+	return 0;
+}
+
+}
+#endif /* BITTY_OS_HTML */
+
+namespace Lua {
+
+namespace Invoke {
+
+/**< Invoke. */
+
+static int Invoke_call(lua_State* L) {
+	const int n = getTop(L);
+	std::string func;
+	Variant val1 = nullptr;
+	Variant val2 = nullptr;
+	Variant val3 = nullptr;
+	Variant val4 = nullptr;
+	Variant val5 = nullptr;
+	Variant val6 = nullptr;
+	Variant val7 = nullptr;
+	Variant val8 = nullptr;
+	Variant val9 = nullptr;
+	Variant val10 = nullptr;
+	Variant val11 = nullptr;
+	Variant val12 = nullptr;
+	Variant val13 = nullptr;
+	Variant val14 = nullptr;
+	Variant val15 = nullptr;
+	Variant val16 = nullptr;
+	read<>(L, func);
+	if (n > 1) read<2>(L, &val1);
+	if (n > 2) read<3>(L, &val2);
+	if (n > 3) read<4>(L, &val3);
+	if (n > 4) read<5>(L, &val4);
+	if (n > 5) read<6>(L, &val5);
+	if (n > 6) read<7>(L, &val6);
+	if (n > 7) read<8>(L, &val7);
+	if (n > 8) read<9>(L, &val8);
+	if (n > 9) read<10>(L, &val9);
+	if (n > 10) read<11>(L, &val10);
+	if (n > 11) read<12>(L, &val11);
+	if (n > 12) read<13>(L, &val12);
+	if (n > 13) read<14>(L, &val13);
+	if (n > 14) read<15>(L, &val14);
+	if (n > 15) read<16>(L, &val15);
+	if (n > 16) read<17>(L, &val16);
+
+#if defined BITTY_OS_HTML
+	auto toArg = [] (const Variant& val) -> std::string {
+		if (val.type() == Variant::Types::NIL)
+			return "null";
+		if (val.type() == Variant::Types::STRING)
+			return "\"" + val.toString() + "\"";
+
+		return val.toString();
+	};
+
+	std::string code;
+	code += func;
+	code += "(";
+	if (n > 1) {
+		code += toArg(val1);
+		if (n > 2) code += ",";
+	}
+	if (n > 2) {
+		code += toArg(val2);
+		if (n > 3) code += ",";
+	}
+	if (n > 3) {
+		code += toArg(val3);
+		if (n > 4) code += ",";
+	}
+	if (n > 4) {
+		code += toArg(val4);
+		if (n > 5) code += ",";
+	}
+	if (n > 5) {
+		code += toArg(val5);
+		if (n > 6) code += ",";
+	}
+	if (n > 6) {
+		code += toArg(val6);
+		if (n > 7) code += ",";
+	}
+	if (n > 7) {
+		code += toArg(val7);
+		if (n > 8) code += ",";
+	}
+	if (n > 8) {
+		code += toArg(val8);
+		if (n > 9) code += ",";
+	}
+	if (n > 9) {
+		code += toArg(val9);
+		if (n > 10) code += ",";
+	}
+	if (n > 10) {
+		code += toArg(val10);
+		if (n > 11) code += ",";
+	}
+	if (n > 11) {
+		code += toArg(val11);
+		if (n > 12) code += ",";
+	}
+	if (n > 12) {
+		code += toArg(val12);
+		if (n > 13) code += ",";
+	}
+	if (n > 13) {
+		code += toArg(val13);
+		if (n > 14) code += ",";
+	}
+	if (n > 14) {
+		code += toArg(val14);
+		if (n > 15) code += ",";
+	}
+	if (n > 15) {
+		code += toArg(val15);
+		if (n > 16) code += ",";
+	}
+	if (n > 16) {
+		code += toArg(val16);
+	}
+	code += ");";
+	const char* ret_ = emscripten_run_script_string(code.c_str());
+	const std::string ret = ret_ ? ret_ : "";
+	scriptingLuaApiFree((void*)ret_);
+
+	callback(L); // Consume pending call.
+
+	return write(L, ret);
+#else /* BITTY_OS_HTML */
+	error(L, "The \"Invoke.call(...)\" method is not available.");
+
+	return 0;
+#endif /* BITTY_OS_HTML */
+}
+
+static void open_Invoke(lua_State* L) {
+	req(
+		L,
+		array(
+			luaL_Reg{
+				"Invoke",
+				[] (lua_State* L) -> int {
+					lib(
+						L,
+						array(
+							luaL_Reg{ "call", Invoke_call },
+							luaL_Reg{ nullptr, nullptr }
+						)
+					);
+
+					return 1;
+				}
+			},
+			luaL_Reg{ nullptr, nullptr }
+		)
+	);
+}
+
+/**< Categories. */
+
+void open(class Executable* exec) {
+	// Prepare.
+	lua_State* L = (lua_State*)exec->pointer();
+
+	// Invoke.
+	open_Invoke(L);
+}
+
+#if defined BITTY_OS_HTML
+void callback(lua_State* L) {
+	if (invokeCalls.empty())
+		return;
+
+	Function::Ptr callFunc = nullptr;
+	getGlobal(L, LUA_CALL_FUNCTION_NAME);
+	read(L, callFunc);
+	pop(L);
+
+	if (!callFunc || !callFunc->valid()) {
+		callFunc = nullptr;
+
+		return;
+	}
+
+	struct Params {
+		Function::Ptr callFunc = nullptr;
+		InvokeCall* calling = nullptr;
+		int code = 0;
+
+		Params() {
+		}
+		Params(Function::Ptr callf, InvokeCall* calling_) : callFunc(callf), calling(calling_) {
+		}
+	};
+	ProtectedFunction func = [] (lua_State* L, void* ud) -> void {
+		Params* params = (Params*)ud;
+		Function::Ptr &callFunc = params->callFunc;
+		InvokeCall* calling = params->calling;
+		int &code = params->code;
+
+		switch (calling->arguments.size()) {
+		case 0:
+			code = ScriptingLua::check(L, call(L, *callFunc));
+
+			break;
+		case 1:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0]));
+
+			break;
+		case 2:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1]));
+
+			break;
+		case 3:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2]));
+
+			break;
+		case 4:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3]));
+
+			break;
+		case 5:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4]));
+
+			break;
+		case 6:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5]));
+
+			break;
+		case 7:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6]));
+
+			break;
+		case 8:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7]));
+
+			break;
+		case 9:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8]));
+
+			break;
+		case 10:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9]));
+
+			break;
+		case 11:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10]));
+
+			break;
+		case 12:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10], calling->arguments[11]));
+
+			break;
+		case 13:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10], calling->arguments[11], calling->arguments[12]));
+
+			break;
+		case 14:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10], calling->arguments[11], calling->arguments[12], calling->arguments[13]));
+
+			break;
+		case 15:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10], calling->arguments[11], calling->arguments[12], calling->arguments[13], calling->arguments[14]));
+
+			break;
+		case 16:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10], calling->arguments[11], calling->arguments[12], calling->arguments[13], calling->arguments[14], calling->arguments[15]));
+
+			break;
+		default:
+			code = ScriptingLua::check(L, call(L, *callFunc, calling->arguments[0], calling->arguments[1], calling->arguments[2], calling->arguments[3], calling->arguments[4], calling->arguments[5], calling->arguments[6], calling->arguments[7], calling->arguments[8], calling->arguments[9], calling->arguments[10], calling->arguments[11], calling->arguments[12], calling->arguments[13], calling->arguments[14], calling->arguments[15]));
+
+			break;
+		}
+		assert(getTop(L) == 0 && "Polluted Lua stack.");
+	};
+	while (!invokeCalls.empty()) {
+		InvokeCall calling = invokeCalls.front();
+		invokeCalls.pop_front();
+		const Params params(callFunc, &calling);
+#if BITTY_DEBUG_ENABLED
+		int ret = LUA_OK;
+		try {
+			ret = invoke(L, func, (void*)&params);
+		} catch (const std::bad_alloc &) {
+			gc(L);
+
+			error(L, "Memory overflow.");
+		}
+#else /* BITTY_DEBUG_ENABLED */
+		const int ret = invoke(L, func, (void*)&params);
+#endif /* BITTY_DEBUG_ENABLED */
+		if (ScriptingLua::check(L, ret) != LUA_OK || params.code != LUA_OK) {
+			callFunc = nullptr;
+
+			return;
+		}
+	}
+
+	callFunc = nullptr;
+}
+#else /* BITTY_OS_HTML */
+void callback(lua_State*) {
+	// Do nothing.
+}
+#endif /* BITTY_OS_HTML */
+
+}
+
+}
+
+/* ===========================================================================} */
+
+/*
+** {===========================================================================
 ** Application
 */
 

@@ -369,6 +369,7 @@ bool Workspace::open(class Window* wnd, class Renderer* rnd, const class Project
 	busy(false);
 
 	activeFrameRate(fps);
+	skipFrameCount(0);
 
 	currentState(Executable::READY);
 
@@ -544,6 +545,19 @@ bool Workspace::close(class Window* /* wnd */, class Renderer* /* rnd */, const 
 	fprintf(stdout, "Workspace closed.\n");
 
 	return true;
+}
+
+bool Workspace::skipping(void) {
+	if (skipFrameCount() <= 0)
+		return false;
+
+	skipFrameCount(skipFrameCount() - 1);
+
+	return true;
+}
+
+void Workspace::skipFrame(void) {
+	skipFrameCount(1);
 }
 
 bool Workspace::prefer2XScaleForBigDisplay(void) const {

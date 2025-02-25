@@ -893,6 +893,8 @@ private:
 			ImGui::SetWindowFontScale(scale);
 			ImGui::PopFont();
 			ImGui::PopStyleColor();
+
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
 		}
 		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Left)) { // Used `ImGui::IsItemHovered()` instead of `ImGui::IsItemClicked()` to avoid a clicking issue.
 			bool pag = false;

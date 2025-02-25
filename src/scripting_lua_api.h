@@ -18,6 +18,10 @@
 ** Macros and constants
 */
 
+#ifndef LUA_CALL_FUNCTION_NAME
+#	define LUA_CALL_FUNCTION_NAME "call"
+#endif /* LUA_CALL_FUNCTION_NAME */
+
 #ifndef LUA_CHECK_ALIAS
 #	define LUA_CHECK_ALIAS(Y, A) static inline void check(lua_State* L, Y* &ret, Index idx = Index(1), const char* type = #A) { check<>(L, ret, idx, type); }
 #endif /* LUA_CHECK_ALIAS */
@@ -177,6 +181,25 @@ namespace Lua {
 namespace Engine {
 
 void open(class Executable* exec);
+
+}
+
+}
+
+/* ===========================================================================} */
+
+/*
+** {===========================================================================
+** Invoke
+*/
+
+namespace Lua {
+
+namespace Invoke {
+
+void open(class Executable* exec);
+
+void callback(lua_State* L);
 
 }
 
