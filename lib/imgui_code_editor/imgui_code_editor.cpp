@@ -620,7 +620,7 @@ void CodeEditor::UndoRecord::Undo(CodeEditor* aEditor) {
 	if (!Content.empty()) {
 		switch (Type) {
 		case UndoType::Add: // Fall through.
-		case UndoType::ToLowerCase:  // Fall through.
+		case UndoType::ToLowerCase: // Fall through.
 		case UndoType::ToUpperCase: {
 				aEditor->State = After;
 
@@ -791,7 +791,7 @@ void CodeEditor::UndoRecord::Redo(CodeEditor* aEditor) {
 	if (!Content.empty()) {
 		switch (Type) {
 		case UndoType::Add: // Fall through.
-		case UndoType::ToLowerCase:  // Fall through.
+		case UndoType::ToLowerCase: // Fall through.
 		case UndoType::ToUpperCase: {
 				aEditor->State = Before;
 
@@ -1012,6 +1012,8 @@ CodeEditor::CodeEditor() :
 	ShortcutsEnabled(ShortcutType::All),
 	WithinRender(false),
 	ScrollToCursor(0),
+	ScrollY(0.0f),
+	ToSetScrollY(false),
 	WordSelectionMode(false),
 	ColorRangeMin(0),
 	ColorRangeMax(0),
@@ -1284,8 +1286,13 @@ void CodeEditor::Render(const char* aTitle, const ImVec2 &aSize, bool aBorder) {
 
 	SetHeadSize(CharAdv.x * TextStart);
 	ImVec2 cursorScreenPos = GetCursorScreenPos();
+	if (ToSetScrollY) {
+		ToSetScrollY = false;
+		SetScrollY(ScrollY);
+	}
 	const float scrollX = GetScrollX();
 	const float scrollY = GetScrollY();
+	ScrollY = scrollY;
 
 	int dblClkLineNo = -1;
 	int lineNo = (int)floor(scrollY / CharAdv.y);
@@ -1947,6 +1954,15 @@ void CodeEditor::EnsureCursorVisible(bool aForceAbove, bool aSlowMode) {
 		SetScrollX(std::max(0.0f, len * CharAdv.x));
 	else if (len + TextStart > right - stepRight)
 		SetScrollX(std::max(0.0f, (len + TextStart + stepRight) * CharAdv.x - width));
+}
+
+float CodeEditor::GetScrollPositionY(void) {
+	return ScrollY;
+}
+
+void CodeEditor::SetScrollPositionY(float val) {
+	ScrollY = val;
+	ToSetScrollY = true;
 }
 
 void CodeEditor::SetIndentWithTab(bool aValue) {
@@ -3866,15 +3882,47 @@ void CodeEditor::EnterCharacter(Char aChar) {
 		DeleteSelection();
 	}
 
-	const Coordinates coord = GetActualCursorCoordinates();
+	Coordinates coord = GetActualCursorCoordinates();
 	u.Start = coord;
 
 	if (CodeLines.empty())
 		CodeLines.push_back(Line());
 
+	bool autoIndent = false;
 	int moveCursor = 0;
 	const LanguageDefinition::RangedCharPairs::value_type* rangedPair = aChar == '\n' ? nullptr : FindRangedCharPair(aChar);
 	if (aChar == '\n') {
+		int indent = 0;
+		if (LastAutoIndent.hasValue) {
+			if (LastAutoIndent.record.End == u.Start) {
+				const Line &line = CodeLines[coord.Line];
+				for (size_t i = 0; i < line.Glyphs.size(); ++i) {
+					const Glyph &g = line.Glyphs[i];
+					if (g.Character == ' ')
+						++indent;
+					else if (g.Character == '\t')
+						indent += TabSize;
+					else
+						break;
+				}
+
+				const UndoRecord &v = UndoBuf.back();
+				u.Before.SelectionStart = Coordinates(v.After.SelectionEnd.Line, 0);
+				u.Before.SelectionEnd = v.After.SelectionEnd;
+
+				const Coordinates start(LastAutoIndent.record.End.Line, 0);
+				SetSelection(start, LastAutoIndent.record.End);
+				if (HasSelection()) {
+					u.Overwritten = GetSelectionText();
+					DeleteSelection();
+					coord.Column = 0;
+					u.Start = coord;
+				}
+			} else {
+				LastAutoIndent.clear();
+			}
+		}
+
 		InsertLine(coord.Line + 1);
 		Line &line = CodeLines[coord.Line];
 		Line &newLine = CodeLines[coord.Line + 1];
@@ -3885,47 +3933,48 @@ void CodeEditor::EnterCharacter(Char aChar) {
 		ImTextAppendUtf8ToStdStr(u.Content, aChar);
 
 		// Get indent spacec from the last line.
-		int indent = 0;
-		bool broken = false;
-		for (size_t i = 0; i < line.Glyphs.size(); ++i) {
-			const Glyph &g = line.Glyphs[i];
-			if (g.Character == ' ') {
-				++indent;
-			} else if (g.Character == '\t') {
-				indent += TabSize;
-			} else {
-				broken = true;
-
-				break;
+		if (indent == 0) {
+			for (size_t i = 0; i < line.Glyphs.size(); ++i) {
+				const Glyph &g = line.Glyphs[i];
+				if (g.Character == ' ')
+					++indent;
+				else if (g.Character == '\t')
+					indent += TabSize;
+				else
+					break;
 			}
 		}
 		// Automatic indent for the new line.
-		if (IndentWithTab) {
-			const int spacec = indent % TabSize;
-			const int tabs = indent / TabSize;
-			for (int i = 0; i < spacec; ++i) {
-				newLine.Glyphs.insert(newLine.Glyphs.begin(), Glyph(' ', PaletteIndex::Default));
-				++State.CursorPosition.Column;
+		if (indent) {
+			if (IndentWithTab) {
+				const int spacec = indent % TabSize;
+				const int tabs = indent / TabSize;
+				for (int i = 0; i < spacec; ++i) {
+					newLine.Glyphs.insert(newLine.Glyphs.begin(), Glyph(' ', PaletteIndex::Default));
+					++State.CursorPosition.Column;
+				}
+				for (int i = 0; i < tabs; ++i) {
+					newLine.Glyphs.insert(newLine.Glyphs.begin(), Glyph('\t', PaletteIndex::Default));
+					++State.CursorPosition.Column;
+				}
+				for (int i = 0; i < tabs; ++i) {
+					ImTextAppendUtf8ToStdStr(u.Content, '\t');
+				}
+				for (int i = 0; i < spacec; ++i) {
+					ImTextAppendUtf8ToStdStr(u.Content, ' ');
+				}
+			} else {
+				const int spacec = indent;
+				for (int i = 0; i < spacec; ++i) {
+					newLine.Glyphs.insert(newLine.Glyphs.begin(), Glyph(' ', PaletteIndex::Default));
+					++State.CursorPosition.Column;
+				}
+				for (int i = 0; i < spacec; ++i) {
+					ImTextAppendUtf8ToStdStr(u.Content, ' ');
+				}
 			}
-			for (int i = 0; i < tabs; ++i) {
-				newLine.Glyphs.insert(newLine.Glyphs.begin(), Glyph('\t', PaletteIndex::Default));
-				++State.CursorPosition.Column;
-			}
-			for (int i = 0; i < tabs; ++i) {
-				ImTextAppendUtf8ToStdStr(u.Content, '\t');
-			}
-			for (int i = 0; i < spacec; ++i) {
-				ImTextAppendUtf8ToStdStr(u.Content, ' ');
-			}
-		} else {
-			const int spacec = indent;
-			for (int i = 0; i < spacec; ++i) {
-				newLine.Glyphs.insert(newLine.Glyphs.begin(), Glyph(' ', PaletteIndex::Default));
-				++State.CursorPosition.Column;
-			}
-			for (int i = 0; i < spacec; ++i) {
-				ImTextAppendUtf8ToStdStr(u.Content, ' ');
-			}
+
+			autoIndent = true;
 		}
 
 		SetSelection(State.CursorPosition, State.CursorPosition);
@@ -3968,10 +4017,15 @@ void CodeEditor::EnterCharacter(Char aChar) {
 
 	AddUndo(u);
 
+	if (autoIndent)
+		LastAutoIndent = AutoIndentRecord(u);
+	else
+		LastAutoIndent.clear();
+
 	Colorize(coord.Line - 1, 3);
 	EnsureCursorVisible();
 
-	OnModified();
+	OnModified(false);
 
 	if (moveCursor != 0)
 		State.CursorPosition.Column += moveCursor;
@@ -4111,7 +4165,10 @@ void CodeEditor::OnColorized(bool aMultilineComment) const {
 	ColorizedHandler(aMultilineComment);
 }
 
-void CodeEditor::OnModified(void) const {
+void CodeEditor::OnModified(bool aClearAutoIndent) const {
+	if (aClearAutoIndent)
+		LastAutoIndent.clear();
+
 	if (ModifiedHandler == nullptr)
 		return;
 

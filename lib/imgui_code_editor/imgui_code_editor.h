@@ -265,6 +265,8 @@ public:
 	void SetCursorPosition(const Coordinates &aPosition);
 	Coordinates GetCursorPosition(void) const;
 	void EnsureCursorVisible(bool aForceAbove = false, bool aSlowMode = false);
+	float GetScrollPositionY(void);
+	void SetScrollPositionY(float val);
 
 	void SetIndentWithTab(bool aValue);
 	bool GetIndentWithTab(void) const;
@@ -436,7 +438,7 @@ protected:
 	void OnChanged(const Coordinates &aStart, const Coordinates &aEnd, int aOffset);
 	bool OnKeyPressed(ImGuiKey aKey);
 	void OnColorized(bool aMultilineComment) const;
-	void OnModified(void) const;
+	void OnModified(bool aClearAutoIndent = true) const;
 	void OnHeadClicked(int aLine, bool aDoubleClicked) const;
 	void OnLineClicked(int aLine, bool aDoubleClicked) const;
 
@@ -446,6 +448,21 @@ protected:
 	UndoBuffer UndoBuf;
 	int UndoIndex;
 	int SavedIndex;
+	mutable struct AutoIndentRecord {
+		bool hasValue = false;
+		UndoRecord record;
+
+		AutoIndentRecord() {
+		}
+		AutoIndentRecord(const UndoRecord &aRecord) : record(aRecord) {
+			hasValue = true;
+		}
+
+		void clear(void) {
+			hasValue = false;
+			record = UndoRecord();
+		}
+	} LastAutoIndent;
 	KeyPressed KeyPressedHandler;
 	Colorized ColorizedHandler;
 	Modified ModifiedHandler;
@@ -467,6 +484,8 @@ protected:
 	ShortcutType ShortcutsEnabled;
 	bool WithinRender;
 	int ScrollToCursor;
+	float ScrollY;
+	bool ToSetScrollY;
 	bool WordSelectionMode;
 	int ColorRangeMin, ColorRangeMax;
 	std::string LastSymbol;
