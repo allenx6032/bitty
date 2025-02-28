@@ -1023,6 +1023,8 @@ bool Workspace::load(class Window* wnd, class Renderer* rnd, const class Project
 	Jpath::get(doc, settings()->editorCaseSensitive, "editor", "case_sensitive");
 	Jpath::get(doc, settings()->editorMatchWholeWord, "editor", "match_whole_word");
 	Jpath::get(doc, settings()->editorGlobalSearch, "editor", "global_search");
+	Jpath::get(doc, settings()->editorAlwaysShowTransparentBackground, "editor", "always_show_transparent_background");
+	Jpath::get(doc, settings()->editorAlwaysShowGrids, "editor", "always_show_grids");
 
 	Jpath::get(doc, settings()->canvasState, "canvas", "state");
 	Jpath::get(doc, settings()->canvasFixRatio, "canvas", "fix_ratio");
@@ -1132,6 +1134,8 @@ bool Workspace::save(class Window* wnd, class Renderer*, const class Project*, c
 	Jpath::set(doc, doc, settings()->editorCaseSensitive, "editor", "case_sensitive");
 	Jpath::set(doc, doc, settings()->editorMatchWholeWord, "editor", "match_whole_word");
 	Jpath::set(doc, doc, settings()->editorGlobalSearch, "editor", "global_search");
+	Jpath::set(doc, doc, settings()->editorAlwaysShowTransparentBackground, "editor", "always_show_transparent_background");
+	Jpath::set(doc, doc, settings()->editorAlwaysShowGrids, "editor", "always_show_grids");
 
 	Jpath::set(doc, doc, settings()->canvasState, "canvas", "state");
 	Jpath::set(doc, doc, settings()->canvasFixRatio, "canvas", "fix_ratio");
@@ -2166,16 +2170,34 @@ bool Workspace::canvas(class Window* wnd, class Renderer* rnd, const class Proje
 void Workspace::debug(class Window* /* wnd */, class Renderer* rnd, const class Project* project, Executable* exec, class Primitives* primitives, unsigned fps) {
 	debugShown(false);
 
-	if (!*debugVisible() || !executing())
+	if (!executing())
 		return;
 
 	if (immersive())
 		return;
 
-	debugShown(true);
-
 	ImGuiIO &io = ImGui::GetIO();
 	ImGuiStyle &style = ImGui::GetStyle();
+
+	if (!*debugVisible()) {
+		if (paused()) {
+			Operations::debugSetProgramPointer(this, project, exec);
+
+			if (ImGui::IsKeyReleased(SDL_SCANCODE_F10)) {
+				Operations::debugStepOver(this, project, exec);
+			}
+			if (ImGui::IsKeyReleased(SDL_SCANCODE_F11)) {
+				Operations::debugStepInto(this, project, exec);
+			}
+			if (ImGui::IsKeyReleased(SDL_SCANCODE_F11) && io.KeyShift) {
+				Operations::debugStepOut(this, project, exec);
+			}
+		}
+
+		return;
+	}
+
+	debugShown(true);
 
 	VariableGuard<decltype(style.WindowPadding)> guardWindowPadding(&style.WindowPadding, style.WindowPadding, ImVec2());
 

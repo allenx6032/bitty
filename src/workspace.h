@@ -199,6 +199,8 @@ public:
 		bool editorCaseSensitive = false;
 		bool editorMatchWholeWord = false;
 		bool editorGlobalSearch = false;
+		bool editorAlwaysShowTransparentBackground = false;
+		bool editorAlwaysShowGrids = false;
 
 		unsigned canvasState = POPUP;
 		bool canvasFixRatio = true;
