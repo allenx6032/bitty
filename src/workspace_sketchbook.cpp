@@ -72,6 +72,8 @@ WorkspaceSketchbook::SketchbookSettings &WorkspaceSketchbook::SketchbookSettings
 	editorCaseSensitive = other.editorCaseSensitive;
 	editorMatchWholeWord = other.editorMatchWholeWord;
 	editorGlobalSearch = other.editorGlobalSearch;
+	editorAlwaysShowTransparentBackground = other.editorAlwaysShowTransparentBackground;
+	editorAlwaysShowGrids = other.editorAlwaysShowGrids;
 
 	canvasState = other.canvasState;
 	canvasFixRatio = other.canvasFixRatio;
@@ -133,7 +135,9 @@ bool WorkspaceSketchbook::SketchbookSettings::operator != (const SketchbookSetti
 		editorShowWhiteSpaces != other.editorShowWhiteSpaces ||
 		editorCaseSensitive != other.editorCaseSensitive ||
 		editorMatchWholeWord != other.editorMatchWholeWord ||
-		editorGlobalSearch != other.editorGlobalSearch
+		editorGlobalSearch != other.editorGlobalSearch ||
+		editorAlwaysShowTransparentBackground != other.editorAlwaysShowTransparentBackground ||
+		editorAlwaysShowGrids != other.editorAlwaysShowGrids
 	) {
 		return true;
 	}
@@ -1164,6 +1168,12 @@ void WorkspaceSketchbook::menu(class Window* wnd, class Renderer* rnd, const cla
 			if (type == Image::TYPE()) {
 				if (referencing == 0) {
 					ImGui::Separator();
+					if (ImGui::MenuItem(_theme->menuEdit_AlwaysShowBackground(), nullptr, &_settings.editorAlwaysShowTransparentBackground)) {
+						// Do nothing.
+					}
+					if (ImGui::MenuItem(_theme->menuEdit_AlwaysShowGrids(), nullptr, &_settings.editorAlwaysShowGrids)) {
+						// Do nothing.
+					}
 					if (ImGui::MenuItem(_theme->menuEdit_ResizeImage())) {
 						Asset::List::Index idx = assetsEditingIndex();
 						if (idx != -1)
@@ -1185,6 +1195,12 @@ void WorkspaceSketchbook::menu(class Window* wnd, class Renderer* rnd, const cla
 			if (referencing != 0) {
 				ImGui::Separator();
 				if (type == Map::TYPE()) {
+					if (ImGui::MenuItem(_theme->menuEdit_AlwaysShowBackground(), nullptr, &_settings.editorAlwaysShowTransparentBackground)) {
+						// Do nothing.
+					}
+					if (ImGui::MenuItem(_theme->menuEdit_AlwaysShowGrids(), nullptr, &_settings.editorAlwaysShowGrids)) {
+						// Do nothing.
+					}
 					if (ImGui::MenuItem(_theme->menuEdit_ResizeMap())) {
 						Asset::List::Index idx = assetsEditingIndex();
 						if (idx != -1)
@@ -1362,7 +1378,7 @@ void WorkspaceSketchbook::menu(class Window* wnd, class Renderer* rnd, const cla
 			ImGui::MenuItem(_theme->menuWindow_Buttons(), nullptr, bannerVisible());
 			ImGui::MenuItem(_theme->menuWindow_Assets(), nullptr, assetsVisible());
 #if BITTY_DEBUG_ENABLED
-			ImGui::MenuItem(_theme->menuWindow_Debug(), nullptr, debugVisible(), executing());
+			ImGui::MenuItem(_theme->menuWindow_Debug(), nullptr, debugVisible());
 #endif /* BITTY_DEBUG_ENABLED */
 			ImGui::MenuItem(_theme->menuWindow_Console(), nullptr, consoleVisible());
 

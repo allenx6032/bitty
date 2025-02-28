@@ -124,6 +124,8 @@ public:
 	BITTY_PROPERTY_READONLY(std::string, menuEdit_FindNext)
 	BITTY_PROPERTY_READONLY(std::string, menuEdit_FindPrevious)
 	BITTY_PROPERTY_READONLY(std::string, menuEdit_GotoLine)
+	BITTY_PROPERTY_READONLY(std::string, menuEdit_AlwaysShowBackground)
+	BITTY_PROPERTY_READONLY(std::string, menuEdit_AlwaysShowGrids)
 	BITTY_PROPERTY_READONLY(std::string, menuEdit_ResizeGrid)
 	BITTY_PROPERTY_READONLY(std::string, menuEdit_ResizeImage)
 	BITTY_PROPERTY_READONLY(std::string, menuEdit_ResizeTile)

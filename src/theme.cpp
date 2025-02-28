@@ -194,6 +194,8 @@ bool Theme::open(class Renderer* rnd) {
 	menuEdit_FindNext("Find Next");
 	menuEdit_FindPrevious("Find Previous");
 	menuEdit_GotoLine("Goto Line...");
+	menuEdit_AlwaysShowBackground("Always Show Background");
+	menuEdit_AlwaysShowGrids("Always Show Grids");
 	menuEdit_ResizeGrid("Resize Grid...");
 	menuEdit_ResizeImage("Resize Image...");
 	menuEdit_ResizeTile("Resize Tile...");
