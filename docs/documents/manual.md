@@ -238,6 +238,13 @@ function rendererReset()
 end
 ```
 
+Define a `call` function for callback from JavaScript to Lua (for HTML build only). See [Invoking](#invoking) for details.
+
+```lua
+function call()
+end
+```
+
 Generally `setup` is used to initial game variables, states, `update` is where gameplay logic and rendering goes, and `quit` is for persisting necessary data on disk. All these entries above are optional.
 
 Bitty Engine uses a timeout mechanism to avoid unexpected infinite loops, it raises an error when any invoking to the entries takes more than 10 seconds by default. The timeout value can be changed by [Debug.setTimeout(...)](#debug).
