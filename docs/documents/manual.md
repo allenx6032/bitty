@@ -1835,6 +1835,17 @@ The `Invoke.call(func, ...)` invokes from Lua to the host environment (for HTML 
 
 Bitty Engine supports callback from the host environment to Lua (for HTML build only). To use this feature, you need to define a function on the Lua side with the name `call`, and the function will be called when the host environment invokes the callback. The function accepts variadic arguments, and the arguments are passed as strings. In JavaScript, call `Module.call(arg1, arg2, ..., arg16)` to invoke the callback with up to 16 arguments.
 
+To call from JavaScript to Lua, make a "ccall" to `call1`, `call2`, etc. i.e.
+
+```js
+Module.ccall(
+	'call2',
+	'number',
+	[ 'number', 'number' ],
+	[ stringToNewUTF8('Hello'), stringToNewUTF8('World') ]
+);
+```
+
 [TOP](#reference-manual)
 
 ## Application
